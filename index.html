@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SharkStank Inspired — Animated Landing</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- RESET + BASE --- */
+    :root{
+      --bg:#f8fafc;--accent:#0ea5a4;--accent-2:#7c3aed;
+      --muted:#64748b;--card:#fff;--radius:12px;
+      --max:1200px;font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
+    }
+    *{box-sizing:border-box;}
+    html,body{height:100%;margin:0;padding:0;scroll-behavior:smooth;}
+    body{background:var(--bg);color:#0b1220;line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+    .container{width:calc(100% - 40px);max-width:var(--max);margin:0 auto;padding:36px 0;}
+
+    /* --- HEADER --- */
+    .site-header{background:linear-gradient(90deg,rgba(124,58,237,0.06),rgba(14,165,164,0.04));position:sticky;top:0;z-index:40;backdrop-filter:blur(6px);border-bottom:1px solid rgba(15,23,42,0.03);}
+    .header-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0;}
+    .brand{display:flex;gap:12px;align-items:center;}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent-2),var(--accent));color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;box-shadow:0 6px 20px rgba(124,58,237,0.12);transition: transform 0.3s;}
+    .logo:hover{transform:scale(1.1) rotate(-2deg);}
+    .brand-text h1{margin:0;font-size:18px;}
+    .brand-text .tag{color:var(--muted);font-size:12px;}
+    .nav{display:flex;align-items:center;gap:12px;}
+    .nav-links{list-style:none;display:flex;gap:18px;margin:0;padding:0;align-items:center;transition: all 0.3s;}
+    .nav-links a{color:#081124;text-decoration:none;padding:8px 10px;border-radius:8px;font-weight:500;transition: all 0.3s;position:relative;}
+    .nav-links a::after{content:"";position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent-2);transition:width 0.3s;}
+    .nav-links a:hover::after{width:100%;}
+    .actions{display:flex;align-items:center;gap:8px;}
+    .btn{display:inline-block;padding:8px 14px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid transparent;transition:all 0.3s;cursor:pointer;}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;}
+    .btn-primary:hover{opacity:0.9;transform:translateY(-2px);}
+    .btn-outline{border:1px solid rgba(11,17,36,0.1);background:white;color:#0b1220;}
+    .btn-outline:hover{background:var(--accent);color:white;border:none;transform:translateY(-2px);}
+    .mobile-toggle{display:none;background:transparent;border:0;font-size:24px;cursor:pointer;}
+
+    /* --- HERO --- */
+    .hero{padding:56px 0;background:linear-gradient(180deg,rgba(124,58,237,0.03),rgba(14,165,164,0.02));overflow:hidden;}
+    .hero-grid{display:grid;grid-template-columns:1fr 460px;gap:36px;align-items:center;}
+    .hero-content h2{font-size:34px;margin:0 0 12px;line-height:1.2;}
+    .hero-content h2 span{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .lead{color:var(--muted);margin-bottom:18px;}
+    .hero-cta{display:flex;gap:12px;align-items:center;}
+    .link-ghost{color:var(--muted);text-decoration:none;transition:color 0.3s;}
+    .link-ghost:hover{color:var(--accent-2);text-decoration:underline;}
+    .trust{margin-top:22px;color:var(--muted);display:flex;gap:14px;align-items:center;}
+    .logos img{margin-left:8px;opacity:0.9;filter:grayscale(10%);height:30px;transition:all 0.5s;}
+    .logos img:hover{filter:grayscale(0%);transform:scale(1.1);}
+
+    .hero-media .card-cta{background:white;border-radius:14px;overflow:hidden;box-shadow:0 18px 40px rgba(15,23,42,0.06);transition: transform 0.5s;}
+    .hero-media .card-cta:hover{transform:translateY(-8px) rotate(-1deg);}
+    .hero-media img{width:100%;display:block;height:320px;object-fit:cover;transition: transform 0.5s;}
+    .hero-media img:hover{transform:scale(1.05);}
+
+    /* --- SPLIT / FEATURES --- */
+    .split{display:grid;grid-template-columns:1fr 460px;gap:28px;align-items:start;margin-top:40px;}
+    .bullets{margin-top:12px;padding-left:18px;list-style-type:disc;}
+    .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+    .feature{background:white;padding:16px;border-radius:12px;box-shadow:0 10px 25px rgba(11,17,36,0.05);transition: transform 0.4s, box-shadow 0.4s, background 0.4s;}
+    .feature:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(11,17,36,0.12);background:linear-gradient(135deg,var(--accent-2),var(--accent));color:white;}
+    .feature:hover .f-ico{transform:scale(1.3) rotate(10deg);}
+    .f-ico{font-size:24px;margin-bottom:8px;transition:transform 0.4s;}
+
+    /* --- TIMELINE --- */
+    .timeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:20px;}
+    .step{display:flex;gap:12px;align-items:flex-start;background:white;padding:16px;border-radius:12px;box-shadow:0 8px 20px rgba(11,17,36,0.05);transition:transform 0.4s,box-shadow 0.4s;}
+    .step:hover{transform:translateY(-4px) rotate(-0.5deg);box-shadow:0 14px 28px rgba(11,17,36,0.08);}
+    .step-num{width:44px;height:44px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;display:flex;align-items:center;justify-content:center;font-weight:700;}
+
+    /* --- MENTORS --- */
+    .mentors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;margin-top:18px;}
+    .mentor{background:white;padding:18px;border-radius:12px;text-align:center;box-shadow:0 8px 20px rgba(11,17,36,0.05);transition:transform 0.5s,box-shadow 0.5s;}
+    .mentor:hover{transform:translateY(-6px) scale(1.05);box-shadow:0 18px 36px rgba(11,17,36,0.1);}
+    .mentor img{width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:12px;transition:transform 0.5s;}
+    .mentor img:hover{transform:scale(1.08);}
+
+    /* --- FAQ --- */
+    .faq-item{margin-bottom:16px;padding:12px;border-left:3px solid var(--accent);background:#f9f9f9;border-radius:8px;cursor:pointer;transition:all 0.3s;}
+    .faq-item:hover{background:linear-gradient(135deg,var(--accent-2),var(--accent));color:white;}
+    .faq-item h4{margin:0 0 6px;}
+    .faq-item p{margin:0;color:var(--muted);display:none;}
+    .faq-item.active p{display:block;}
+
+    /* --- CTA --- */
+    .cta{background:linear-gradient(90deg,rgba(124,58,237,0.06),rgba(14,165,164,0.05));padding:28px 0;border-radius:14px;margin:36px 0;}
+    .cta-grid{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+
+    /* --- FOOTER --- */
+    .site-footer{padding:60px 0 30px;background:#0b1220;color:#dce4eb;border-top:1px solid rgba(255,255,255,0.06);}
+    .footer-grid{display:grid;grid-template-columns:1.2fr 150px 220px;gap:40px;}
+    .footer-col{display:flex;flex-direction:column;gap:12px;}
+    .footer-title{font-size:20px;font-weight:700;margin:0;}
+    .footer-subtitle{font-size:16px;font-weight:600;margin:0 0 6px;}
+    .footer-links{list-style:none;padding:0;margin:0;}
+    .footer-links li{margin-bottom:8px;}
+    .footer-links a{color:#cdd6dd;opacity:0.85;text-decoration:none;font-size:15px;transition:0.3s;}
+    .footer-links a:hover{opacity:1;color:#ffffff;padding-left:4px;}
+    .muted{color:#94a3b8 !important;line-height:1.6;}
+    .copyright{text-align:center;margin-top:40px;opacity:0.6;}
+
+    /* --- SCROLL REVEAL --- */
+    [data-reveal]{opacity:0;transform:translateY(30px);transition:opacity 0.8s ease-out, transform 0.8s ease-out;}
+    [data-reveal].revealed{opacity:1;transform:translateY(0);}
+
+    /* --- RESPONSIVE --- */
+    @media (max-width:880px){.hero-grid{grid-template-columns:1fr;}.split{grid-template-columns:1fr;}.nav-links{position:absolute;top:72px;right:20px;background:white;padding:14px;border-radius:12px;display:none;flex-direction:column;box-shadow:0 14px 40px rgba(11,17,36,0.08);}.nav-links.open{display:flex;}.actions .btn-outline,.actions .btn-primary{display:none;}.mobile-toggle{display:inline-block;}}
+    @media (max-width:480px){.hero-content h2{font-size:24px;}.mentors-grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header" data-reveal>
+    <div class="container header-row">
+      <div class="brand">
+        <div class="logo">SSP</div>
+        <div class="brand-text">
+          <h1>SharkStank <span class="muted">Inspired</span></h1>
+          <small class="tag">Pitch • Mentor • Fund</small>
+        </div>
+      </div>
+      <nav class="nav">
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#program">Program</a></li>
+          <li><a href="#mentors">Mentors</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="actions">
+          <a href="#apply" class="btn btn-outline">Apply</a>
+          <a href="#signup" class="btn btn-primary">Join</a>
+          <button class="mobile-toggle" id="mobileToggle">☰</button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content" data-reveal>
+        <h2><span>Pitch your idea.</span> Get mentored. Secure funding.</h2>
+        <p class="lead">Join a curated program where startups meet investors and mentors. Fast-track growth with expert feedback and funding.</p>
+        <div class="hero-cta">
+          <a href="#apply" class="btn btn-primary">Apply Now</a>
+          <a href="#about" class="link-ghost">Learn More</a>
+        </div>
+        <div class="trust">
+          <div></div>
+          <div class="logos">
+            <img src="https://via.placeholder.com/90x30?text=Brand1">
+            <img src="https://via.placeholder.com/90x30?text=Brand2">
+            <img src="https://via.placeholder.com/90x30?text=Brand3">
+          </div>
+        </div>
+      </div>
+      <div class="hero-media" data-reveal>
+        <div class="card-cta"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section container" data-reveal>
+    <div class="split">
+      <div>
+        <h3>What is this program?</h3>
+        <p>We connect ambitious startups with experienced mentors and investors. Over an intensive program, teams refine their pitch, validate product-market fit, and prepare for investment.</p>
+        <ul class="bullets">
+          <li><strong>Mentorship:</strong> Week-by-week coaching</li>
+          <li><strong>Workshops:</strong> Product, Growth, Legal, Financials</li>
+          <li><strong>Demo Day:</strong> Present to active investors</li>
+        </ul>
+      </div>
+      <div>
+        <div class="feature-grid">
+          <div class="feature"><div class="f-ico">🚀</div><h4>Fast Track</h4><p>Short sprints to accelerate traction.</p></div>
+          <div class="feature"><div class="f-ico">💬</div><h4>Expert Mentors</h4><p>Direct access to founders & investors.</p></div>
+          <div class="feature"><div class="f-ico">🤝</div><h4>Funding</h4><p>Pitch to angel groups and VCs.</p></div>
+          <div class="feature"><div class="f-ico">📈</div><h4>Growth</h4><p>Data-driven growth coaching and support.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAM -->
+  <section id="program" class="section section-alt" data-reveal>
+    <div class="container">
+      <h3 class="section-title">Program Timeline</h3>
+      <div class="timeline">
+        <div class="step"><div class="step-num">1</div><div><h4>Application</h4><p>Submit your deck and details.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h4>Mentor Match</h4><p>Get matched with mentors & advisors.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h4>Growth Sprints</h4><p>Weekly milestones and workshops.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div><h4>Demo Day</h4><p>Pitch live to investors.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENTORS -->
+  <section id="mentors" class="section container" data-reveal>
+    <h3 class="section-title">Mentors & Judges</h3>
+    <div class="mentors-grid">
+      <div class="mentor"><img src="https://i.pravatar.cc/200?img=32"><h4>Ali Khan</h4><p class="muted">Founder · Growth</p></div>
+      <div class="mentor"><img src="https://i.pravatar.cc/200?img=12"><h4>Sara Ahmed</h4><p class="muted">Investor · Marketing</p></div>
+      <div class="mentor"><img src="https://i.pravatar.cc/200?img=45"><h4>Omar Rizvi</h4><p class="muted">Tech Advisor</p></div>
+      <div class="mentor"><img src="https://i.pravatar.cc/200?img=55"><h4>Fatima Noor</h4><p class="muted">Legal & Compliance</p></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section container" data-reveal>
+    <h3 class="section-title">Frequently Asked Questions</h3>
+    <div class="faq-item"><h4>Who can apply?</h4><p>Early-stage startups with a prototype or MVP.</p></div>
+    <div class="faq-item"><h4>Is the program paid?</h4><p>Yes, small participation fee. Scholarships available.</p></div>
+    <div class="faq-item"><h4>Can I apply with an idea?</h4><p>Yes, but teams with a prototype get priority.</p></div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta container" data-reveal>
+    <div class="cta-grid">
+      <h3>Ready to join the next batch?</h3>
+      <a href="#apply" class="btn btn-primary">Apply Now</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" data-reveal>
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h4 class="footer-title">SharkStank Inspired</h4>
+        <p class="muted">Empowering startups with mentorship and funding opportunities. Connect, learn, grow, pitch.</p>
+      </div>
+      <div class="footer-col">
+        <h5 class="footer-subtitle">Program</h5>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#program">Program</a></li>
+          <li><a href="#mentors">Mentors</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5 class="footer-subtitle">Follow Us</h5>
+        <ul class="footer-links">
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="copyright">© 2025 SharkStank Inspired. All rights reserved.</p>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Mobile nav toggle
+    const btn = document.getElementById('mobileToggle');
+    const nav = document.getElementById('navLinks');
+    btn.addEventListener('click', () => nav.classList.toggle('open'));
+
+    // FAQ Accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => item.addEventListener('click', () => item.classList.toggle('active')));
+
+    // Scroll reveal
+    const revealElems = document.querySelectorAll('[data-reveal]');
+    const revealOnScroll = () => {
+      const triggerBottom = window.innerHeight * 0.9;
+      revealElems.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if(top < triggerBottom){el.classList.add('revealed');}
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+  </script>
+</body>
+</html>
